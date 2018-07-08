@@ -11,6 +11,7 @@ import UIKit
 import QuartzCore
 
 /// PKHUDProgressView provides an indeterminate progress view.
+@objcMembers
 open class PKHUDProgressView: PKHUDSquareBaseView, PKHUDAnimating {
 
     public init(title: String? = nil, subtitle: String? = nil) {

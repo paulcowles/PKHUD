@@ -10,6 +10,7 @@
 import UIKit
 
 /// PKHUDCheckmarkView provides an animated success (checkmark) view.
+@objcMembers
 open class PKHUDSuccessView: PKHUDSquareBaseView, PKHUDAnimating {
 
     var checkmarkShapeLayer: CAShapeLayer = {
