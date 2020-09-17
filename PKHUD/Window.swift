@@ -109,13 +109,13 @@ internal class ContainerView: UIView {
     
     // MARK: Notifications
     internal func registerForKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     internal func deregisterFromKeyboardNotifications() {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     // MARK: Triggered Functions
@@ -124,12 +124,12 @@ internal class ContainerView: UIView {
         guard let userInfo = notification.userInfo else {
             return
         }
-        if let keyboardHeight = (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.height {
+        if let keyboardHeight = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.height {
             self.keyboardHeight = keyboardHeight
         }
         if !self.isHidden {
-            if let duration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber,
-                let curve = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber {
+            if let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber,
+                let curve = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber {
                 animateHUDWith(duration: duration.doubleValue,
                                curve: UIView.AnimationCurve(rawValue: curve.intValue) ?? UIView.AnimationCurve.easeInOut,
                                toLocation: calculateHudCenter())
@@ -143,8 +143,8 @@ internal class ContainerView: UIView {
             guard let userInfo = notification.userInfo else {
                 return
             }
-            if let duration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber,
-                let curve = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber {
+            if let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber,
+                let curve = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber {
                 animateHUDWith(duration: duration.doubleValue,
                                curve: UIView.AnimationCurve(rawValue: curve.intValue) ?? UIView.AnimationCurve.easeInOut,
                                toLocation: calculateHudCenter())
